@@ -17,9 +17,8 @@ export const useAuth = () => {
     const subscription = authService.state$.subscribe((state) => {
       setIsAuthenticated(!!state.token);
       setLoading(false);
-
       if (!state.token) {
-        router.navigate({ to: "/auth/login" });
+        router.navigate({to: "/auth/login"}).then(r => r);
       }
     });
 
@@ -34,8 +33,8 @@ export const useAuth = () => {
 
   const login = (credentials: { login: string; password: string }) => {
     setLoading(true);
-    authService.login(credentials)
-
+    authService.login(credentials);
+    router.navigate({to: "/"}).then(r => r);
   };
 
   return { isAuthenticated, loading, logout, login };
